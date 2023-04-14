@@ -1,8 +1,9 @@
 const express = require('express');
+const loginValidation = require('../middlewares/loginValidation')
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', loginValidation, async (req, res) => {
   const { email, password } = req.body;
   const num = Math.random();
   const string = num.toString();
