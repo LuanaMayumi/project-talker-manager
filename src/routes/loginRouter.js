@@ -8,7 +8,7 @@ router.post('/', loginValidation, async (req, res) => {
   const num = Math.random();
   const string = num.toString();
   const token = string.slice(-16);
-  console.log(token);
+  // console.log(token);
   if (email && password) {
     res.status(200).json({ token: `${token}` });
   }

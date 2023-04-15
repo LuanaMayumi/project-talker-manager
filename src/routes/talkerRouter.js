@@ -4,6 +4,7 @@ const fs = require('fs').promises;
 // a versão promises é a mais performática
 // sigla para fileSystem
 // lib padrao do node
+const { tokenValidation, nameValidation, ageValidation, talkValidation } = require('../middlewares/postingValidation')
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ const pathResolve = path.resolve(__dirname, '..', 'talker.json');
 // __dirname: pega a rota até esse arquivo, ou seja: app/src/routes
 // coloco o .. pra ele voltar pra src
 // nesse caso ficaria app/src/index.json
+
 
 router.get('/', async (_req, res) => {
   try {
@@ -41,4 +43,26 @@ router.get('/:id', async (req, res) => {
     console.log(error);
   }
 });
+
+router.post('/', 
+tokenValidation,
+nameValidation, 
+ageValidation, 
+talkValidation, 
+async (req, res) => {
+  const response = await fs.readFile(pathResolve, 'utf-8');
+  const data = JSON.parse(response);
+  const person = {...req.body}
+
+  // const { name, age, talk } = req.body
+  const newId = data[data.length - 1].id + 1
+  // const newPerson = { id: newId, name, age, talk }
+  const newPerson = { id: newId, ...person}
+  console.log(newPerson)
+  
+  data.push(newPerson)
+  await fs.writeFile(pathResolve, JSON.stringify(data))
+  
+  return res.status(201).json(newPerson)
+})
 module.exports = router;
