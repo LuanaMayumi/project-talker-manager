@@ -60,15 +60,66 @@ async (req, res) => {
   const data = JSON.parse(response);
   const person = { ...req.body };
 
-  // const { name, age, talk } = req.body
   const newId = data[data.length - 1].id + 1;
-  // const newPerson = { id: newId, name, age, talk }
   const newPerson = { id: newId, ...person };
-  // console.log(newPerson)
   
   data.push(newPerson);
   await fs.writeFile(pathResolve, JSON.stringify(data));
   
   return res.status(201).json(newPerson);
 });
+
+router.put('/:id',
+tokenValidation,
+nameValidation, 
+ageValidation,
+talkAndDateValidation,
+watchedAtValidation,
+rateValidation, 
+async (req, res) => {
+  const { id } = req.params;
+  const {...updatingPerson} = req.body;
+
+  const response = await fs.readFile(pathResolve, 'utf-8');
+  const data = JSON.parse(response);
+
+  const person = data.find((el) => el.id === Number(id) )
+
+  if(!person) {
+    return res.status(404).json({message: "Pessoa palestrante não encontrada" })
+  }
+
+  const personUpdated = {
+    id: Number(id),
+    name: updatingPerson.name,
+    age: updatingPerson.age,
+    talk: {
+      watchedAdt: updatingPerson.talk.watchedAt,
+      rate: updatingPerson.talk.rate,
+     }
+  };
+
+  const filteringArray = data.filter((person) => person.id !== Number(id))
+  // recebe como parametro o caminho do arquivo a ser atualizado,
+  // substitui o person pelo personUpdated
+  // transformar em JSON?
+  await fs.writeFile(pathResolve, JSON.stringify([...filteringArray, personUpdated]), 'utf-8'); 
+  return res.status(200).json(personUpdated)
+
+})
+
+router.delete('/:id',
+tokenValidation,
+async (req, res) => {
+  const { id } = req.params;
+
+  const response = await fs.readFile(pathResolve, 'utf-8');
+  const data = JSON.parse(response);
+
+  const deletingPerson = data.filter((person) => person.id !== Number(id))
+
+  await fs.writeFile(pathResolve, JSON.stringify(deletingPerson), 'utf-8')
+  return res.status(204).json()
+
+})
 module.exports = router;
