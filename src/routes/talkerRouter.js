@@ -7,7 +7,9 @@ const fs = require('fs').promises;
 const { tokenValidation,
 nameValidation,
 ageValidation,
-talkValidation } = require('../middlewares/postingValidation');
+talkAndDateValidation,
+watchedAtValidation,
+rateValidation } = require('../middlewares/postingValidation');
 
 const router = express.Router();
 
@@ -50,7 +52,9 @@ router.post('/',
 tokenValidation,
 nameValidation, 
 ageValidation, 
-talkValidation, 
+talkAndDateValidation,
+watchedAtValidation,
+rateValidation, 
 async (req, res) => {
   const response = await fs.readFile(pathResolve, 'utf-8');
   const data = JSON.parse(response);
