@@ -13,6 +13,8 @@ const {
   rateValidation,
 } = require('../middlewares/postingValidation');
 
+const { findPersonById } = require('../controllers/talker.controller')
+
 const router = express.Router();
 
 const pathResolve = path.resolve(__dirname, '..', 'talker.json');
@@ -31,24 +33,7 @@ router.get('/', async (_req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-
-  const response = await fs.readFile(pathResolve, 'utf-8');
-  const data = JSON.parse(response);
-
-  try {
-    const person = data.find((el) => el.id === Number(id));
-    if (person) {
-      return res.status(200).json(person);
-    }
-    return res
-      .status(404)
-      .json({ message: 'Pessoa palestrante não encontrada' });
-  } catch (error) {
-    console.log(error);
-  }
-});
+router.get('/:id', findPersonById);
 
 router.post(
   '/',
