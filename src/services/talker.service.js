@@ -1,8 +1,8 @@
-const { readFile } = require('../models/talker.model')
+const { readFile } = require('../models/talker.model');
 
 const findById = async (idBody) => {
-  const person = (await readFile()).find((el) => el.id === idBody)
-  return person
-}
+  const person = (await readFile()).find((el) => el.id === idBody);
+  return person;
+};
 
-module.exports = { findById }
+module.exports = { findById };

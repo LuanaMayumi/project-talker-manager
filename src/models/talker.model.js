@@ -9,8 +9,7 @@ const pathResolve = path.resolve(__dirname, '..', 'talker.json');
 const readFile = async () => {
   const response = await fs.readFile(pathResolve, 'utf-8');
   const data = JSON.parse(response);
-  return data
-}
+  return data;
+};
 
-module.exports = { readFile }
-
+module.exports = { readFile };

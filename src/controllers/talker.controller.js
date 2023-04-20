@@ -1,9 +1,9 @@
-const { findById } = require('../services/talker.service')
+const { findById } = require('../services/talker.service');
 
 const findPersonById = async (req, res) => {
     const { id } = req.params;
     try {
-      const person = await findById(Number(id))
+      const person = await findById(Number(id));
       if (person) {
         return res.status(200).json(person);
       }
@@ -13,6 +13,6 @@ const findPersonById = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
-}
+};
 
-module.exports = { findPersonById }
+module.exports = { findPersonById };

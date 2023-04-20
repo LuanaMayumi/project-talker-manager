@@ -13,7 +13,7 @@ const {
   rateValidation,
 } = require('../middlewares/postingValidation');
 
-const { findPersonById } = require('../controllers/talker.controller')
+const { findPersonById } = require('../controllers/talker.controller');
 
 const router = express.Router();
 

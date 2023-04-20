@@ -3,6 +3,6 @@ const createToken = () => {
   const string = num.toString();
   const token = string.slice(-16);
   return token;
-}
+};
 
-module.exports = createToken
+module.exports = createToken;
