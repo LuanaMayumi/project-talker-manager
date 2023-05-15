@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.post('/', loginValidation, async (_req, res) => {
   const token = createToken();
-  // console.log(token);
   
     res.status(200).json({ token: `${token}` });
 });

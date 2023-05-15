@@ -1,5 +1,5 @@
 const express = require('express');
-const path = require('path'); // lib que
+const path = require('path');
 const fs = require('fs').promises;
 // a versão promises é a mais performática
 // sigla para fileSystem
@@ -58,9 +58,6 @@ router.post(
   },
 );
 
-// linhas 118
-// recebe como parametro o caminho do arquivo a ser atualizado,
-// substitui o person pelo personUpdated
 router.put(
   '/:id',
   tokenValidation,
