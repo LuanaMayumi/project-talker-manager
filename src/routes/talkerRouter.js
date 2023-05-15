@@ -99,4 +99,5 @@ router.delete('/:id', tokenValidation, async (req, res) => {
   await fs.writeFile(pathResolve, JSON.stringify(deletingPerson), 'utf-8');
   return res.status(204).json();
 });
+
 module.exports = router;
